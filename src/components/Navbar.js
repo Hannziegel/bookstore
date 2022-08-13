@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import '../styles/Navbar.css';
 
 const Navbar = () => {
   const links = [
     {
       id: 1,
       path: '/',
-      text: 'Home',
+      text: 'Bookstore CMS',
     },
     {
       id: 2,
@@ -21,9 +22,6 @@ const Navbar = () => {
   ];
   return (
     <nav className="navBar">
-      <h1>
-        Bookstore CMS
-      </h1>
       <ul>
         {links.map((link) => (
           <li key={link.id}>
