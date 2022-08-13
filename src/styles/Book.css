@@ -1,0 +1,15 @@
+.book-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-actions-container {
+  display: flex;
+  gap: 10px;
+}
