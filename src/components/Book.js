@@ -2,19 +2,31 @@
 import React from 'react';
 import '../styles/Global.css';
 import '../styles/Book.css';
+import { useDispatch } from 'react-redux/es/exports';
+import PropTypes from 'prop-types';
+import { removeBook } from '../redux/books/books';
 
 const Book = (props) => {
-  const { gener, title, author } = props;
+  const { id, title, author } = props;
+  const dispatch = useDispatch();
 
   return (
     <div className="book-container container">
       <div className="book-info-container">
-        <p>{gener}</p>
+        <p>Fiction</p>
         <h2>{title}</h2>
         <p>{author}</p>
         <div className="book-actions-container">
           <p>Comments</p>
-          <p>Remove</p>
+          <button
+            type="button"
+            className="deleteButton"
+            onClick={() => {
+              dispatch(removeBook({ title, author, id }));
+            }}
+          >
+            Remove
+          </button>
           <p>Edit</p>
         </div>
       </div>
@@ -28,6 +40,12 @@ const Book = (props) => {
       </div>
     </div>
   );
+};
+
+Book.prototype = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
 };
 
 export default Book;
