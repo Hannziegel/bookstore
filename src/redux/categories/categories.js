@@ -17,4 +17,4 @@ const categoryReducer = (state = initialState, action) => {
 export default categoryReducer;
 
 // action creators
-export const checkStatus = () => ({ type: STATUS, payload: '' });
+export const checkStatus = () => ({ type: STATUS, payload: 'Not implemented yet' });
