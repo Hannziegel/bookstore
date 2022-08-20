@@ -1,5 +1,5 @@
-const ADD = 'ADD_BOOK';
-const REMOVE = 'REMOVE_BOOK';
+const ADD = 'bookstore/books/ADD_BOOK';
+const REMOVE = 'bookstore/books/REMOVE_BOOK';
 
 // initial state
 const initialState = [];
