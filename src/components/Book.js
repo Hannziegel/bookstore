@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
 import React from 'react';
 import '../styles/Global.css';
 import '../styles/Book.css';
@@ -7,13 +7,22 @@ import PropTypes from 'prop-types';
 import { removeBook } from '../redux/books/books';
 
 const Book = (props) => {
-  const { id, title, author } = props;
+  const {
+    title, item_id, author, category,
+  } = props;
+
   const dispatch = useDispatch();
+
+  const deleteBook = () => {
+    dispatch(removeBook({
+      title, item_id, author, category,
+    }));
+  };
 
   return (
     <div className="book-container container">
       <div className="book-info-container">
-        <p>Fiction</p>
+        <p>{category}</p>
         <h2>{title}</h2>
         <p>{author}</p>
         <div className="book-actions-container">
@@ -21,9 +30,7 @@ const Book = (props) => {
           <button
             type="button"
             className="deleteButton"
-            onClick={() => {
-              dispatch(removeBook({ title, author, id }));
-            }}
+            onClick={deleteBook}
           >
             Remove
           </button>
@@ -42,10 +49,11 @@ const Book = (props) => {
   );
 };
 
-Book.prototype = {
-  id: PropTypes.string.isRequired,
+Book.propTypes = {
+  item_id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default Book;
