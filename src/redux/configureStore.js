@@ -4,7 +4,7 @@ import bookReducer from './books/books';
 import categoryReducer from './categories/categories';
 
 const store = configureStore({
-  reducer: { books: bookReducer, categories: categoryReducer },
+  reducer: { books: bookReducer.reducer, categories: categoryReducer },
 }, applyMiddleware(thunk));
 
 export default store;

@@ -71,5 +71,3 @@ export const bookReducer = createSlice({
   },
 
 });
-
-export default bookReducer.reducer;
