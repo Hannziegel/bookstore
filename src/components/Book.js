@@ -22,11 +22,11 @@ const Book = (props) => {
   return (
     <div className="book-container container">
       <div className="book-info-container">
-        <p>{category}</p>
+        <p className="category">{category}</p>
         <h2>{title}</h2>
-        <p>{author}</p>
+        <p className="author">{author}</p>
         <div className="book-actions-container">
-          <p>Comments</p>
+          <p className="deleteButton">Comments</p>
           <button
             type="button"
             className="deleteButton"
@@ -34,15 +34,18 @@ const Book = (props) => {
           >
             Remove
           </button>
-          <p>Edit</p>
+          <p className="deleteButton">Edit</p>
         </div>
       </div>
-      <div>
-        63% COMPLETED
+      <div className="progress-container">
+        <div className="progress-bar" />
+        <div className="progress-text">
+          COMPLETED
+        </div>
       </div>
-      <div>
-        <p>CURRENT CHAPTER</p>
-        <p>Chapter 17</p>
+      <div className="update-container">
+        <p className="currentChapter">CURRENT CHAPTER</p>
+        <p className="chapter">Chapter 17</p>
         <button type="button">UPDATE PROGRESS</button>
       </div>
     </div>

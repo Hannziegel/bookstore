@@ -12,12 +12,12 @@ const Navbar = () => {
     {
       id: 2,
       path: '/books',
-      text: 'Books',
+      text: 'BOOKS',
     },
     {
       id: 3,
       path: '/categories',
-      text: 'Categories',
+      text: 'CATEGORIES',
     },
   ];
   return (
@@ -25,7 +25,7 @@ const Navbar = () => {
       <ul>
         {links.map((link) => (
           <li key={link.id}>
-            <NavLink to={link.path} className={({ isActive }) => (isActive ? 'active-link' : 'none')}>
+            <NavLink to={link.path} className={({ isActive }) => (isActive ? `active-link name${link.id}` : `none name${link.id}`)}>
               {link.text}
             </NavLink>
           </li>

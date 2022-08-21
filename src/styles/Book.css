@@ -2,14 +2,106 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
 }
 
 .book-info-container {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 }
 
 .book-actions-container {
   display: flex;
   gap: 10px;
+  align-items: center;
+}
+
+.addBook-container {
+  background-color: #fff;
+}
+
+.deleteButton {
+  align-self: flex-end;
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: none;
+  transition-duration: 0.2s;
+  font-family: RobotoSlab, serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4386bf;
+}
+
+.update-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.currentChapter {
+  opacity: 0.5;
+  font-size: 0.813rem;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.chapter {
+  font-size: 1rem;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: #121212;
+}
+
+.category {
+  opacity: 0.5;
+  font-family: Montserrat, serif;
+  font-size: 0.875rem;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #121212;
+}
+
+.author {
+  font-size: 0.875rem;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4386bf;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+}
+
+.progress-text {
+  color: #4386bf;
+}
+
+.progress-bar {
+  background-image: url('../imgs/percentage.jpeg');
+  background-repeat: no-repeat;
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
 }
