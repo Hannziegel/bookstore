@@ -25,7 +25,7 @@ export default bookReducer;
 // action creators
 
 export const addBook = (book) => async (dispatch) => {
-  await fetch('https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/DRrhhx0Pgnk6pSVsDI0Z/books', {
+  await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
