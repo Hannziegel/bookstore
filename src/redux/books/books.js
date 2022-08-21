@@ -1,3 +1,5 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 const ADD = 'bookstore/books/ADD_BOOK';
 const REMOVE = 'bookstore/books/REMOVE_BOOK';
 const GET = 'bookstore/books/GET_BOOK';
@@ -6,58 +8,68 @@ const API_ID = 'DRrhhx0Pgnk6pSVsDI0Z';
 // initial state
 const initialState = [];
 
-// reducer
-const bookReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD:
-      return [...state, action.book];
-    case REMOVE:
-      return state.filter((book) => book.item_id !== action.book.item_id);
-    case GET:
-      return action.payload;
-    default:
-      return state;
-  }
-};
+export const addBook = createAsyncThunk(
+  ADD,
+  async (book) => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        book,
+      ),
+    });
+    if (response.ok) {
+      return book;
+    }
+    throw response;
+  },
+);
 
-export default bookReducer;
+export const removeBook = createAsyncThunk(
+  REMOVE,
+  async (book) => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books/${book.item_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      return book;
+    }
+    throw response;
+  },
+);
 
-// action creators
+export const getBooks = createAsyncThunk(
+  GET,
+  async () => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`);
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  },
+);
 
-export const addBook = (book) => async (dispatch) => {
-  await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(book),
-  }).then(dispatch({
-    type: ADD,
-    book,
-  }));
-};
+export const bookReducer = createSlice({
+  name: 'books',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(addBook.fulfilled, (state, action) => {
+      state.push(action.payload);
+    })
+      .addCase(removeBook.fulfilled, (state, action) => state.filter(
+        (book) => book.item_id !== action.payload.item_id,
+      ))
+      .addCase(getBooks.fulfilled, (state, action) => Object.entries(action.payload).map(
+        ([id, [book]]) => ({ ...book, item_id: id }),
+      ));
+  },
 
-export const removeBook = (book) => async (dispatch) => {
-  await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books/${book.item_id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(dispatch({
-    type: REMOVE, book,
-  }));
-};
+});
 
-export const getBooks = () => async (dispatch) => {
-  const books = [];
-  const fetchBooks = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`).then((data) => data.json());
-
-  Object.keys(fetchBooks).forEach((e) => {
-    books.push({ ...fetchBooks[e][0], item_id: e });
-  });
-
-  dispatch({
-    type: GET,
-    payload: books,
-  });
-};
+export default bookReducer.reducer;
