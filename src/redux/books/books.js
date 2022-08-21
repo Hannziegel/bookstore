@@ -1,39 +1,73 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 const ADD = 'bookstore/books/ADD_BOOK';
 const REMOVE = 'bookstore/books/REMOVE_BOOK';
+const GET = 'bookstore/books/GET_BOOK';
+const API_ID = 'DRrhhx0Pgnk6pSVsDI0Z';
 
 // initial state
-const initialState = [
-  {
-    title: 'The name of the wind',
-    author: 'Patrick Rothfuss',
-    id: '1',
+const initialState = [];
+
+export const addBook = createAsyncThunk(
+  ADD,
+  async (book) => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        book,
+      ),
+    });
+    if (response.ok) {
+      return book;
+    }
+    throw response;
   },
-  {
-    title: 'American Gods',
-    author: 'Neil Gaiman',
-    id: '2',
+);
+
+export const removeBook = createAsyncThunk(
+  REMOVE,
+  async (book) => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books/${book.item_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      return book;
+    }
+    throw response;
   },
-];
+);
 
-// reducer
-const bookReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD:
-      return [...state, action.book];
-    case REMOVE:
-      return state.filter((book) => book.id !== action.book.id);
-    default:
-      return state;
-  }
-};
+export const getBooks = createAsyncThunk(
+  GET,
+  async () => {
+    const response = await fetch(`https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/${API_ID}/books`);
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  },
+);
 
-export default bookReducer;
+export const bookReducer = createSlice({
+  name: 'books',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(addBook.fulfilled, (state, action) => {
+      state.push(action.payload);
+    })
+      .addCase(removeBook.fulfilled, (state, action) => state.filter(
+        (book) => book.item_id !== action.payload.item_id,
+      ))
+      .addCase(getBooks.fulfilled, (state, action) => Object.entries(action.payload).map(
+        ([id, [book]]) => ({ ...book, item_id: id }),
+      ));
+  },
 
-// action creators
-
-export const addBook = (book) => ({
-  type: ADD,
-  book,
 });
-
-export const removeBook = (book) => ({ type: REMOVE, book });
