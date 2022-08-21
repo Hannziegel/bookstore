@@ -7,7 +7,7 @@ const CheckStatusButton = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className="checkStatus">
       <button
         type="button"
         onClick={() => {

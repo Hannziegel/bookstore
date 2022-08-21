@@ -24,7 +24,7 @@ const AddBook = () => {
   };
 
   return (
-    <div className="container flex-column">
+    <div className="container flex-column addBook-container">
       <h3>ADD NEW BOOK</h3>
       <form className="flex" onSubmit={createBook}>
         <input required placeholder="Book Title" type="text" name="title" value={titleName} onInput={(e) => setTitle(e.target.value)} />
